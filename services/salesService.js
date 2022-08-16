@@ -25,10 +25,14 @@ const salesService = {
     const sale = await salesModel.getSalesById(id);
     return sale;
   },
-  
+
   async addSales(sales) {
     const saleId = await salesModel.addSales(sales);
     return { id: saleId, itemsSold: sales };
+  },
+
+  async remove(id) {
+    await salesModel.remove(id);
   },
 };
 

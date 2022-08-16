@@ -57,6 +57,16 @@ const salesModel = {
     ]);
     return insertId;
   },
+
+  async remove(id) {
+    const query = `
+      DELETE FROM
+        StoreManager.sales
+      WHERE
+        id = ?;
+    `;
+    await connection.execut(query, [id]);
+  },
 };
 
 module.exports = salesModel;

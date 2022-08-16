@@ -30,6 +30,15 @@ const salesController = {
 
     res.status(201).json(saleInfo);
   },
+
+  async remove(req, res) {
+    const { id } = req.params;
+
+    await salesService.checkIfExists(id);
+    await salesService.remove(id);
+
+    res.sendStatus(204);
+  },
 };
 
 module.exports = salesController;
