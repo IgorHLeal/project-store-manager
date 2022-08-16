@@ -6,6 +6,7 @@ const productsController = {
 
     res.status(200).json(productsList);
   },
+
   async getProductsById(req, res) {
     const { id } = req.params;
 
@@ -13,6 +14,14 @@ const productsController = {
     const product = await productsService.getProductsById(id);
 
     res.status(200).json(product);
+  },
+
+  async addProducts(req, res) {
+    const { name } = productsService.validateBody(req.body);
+
+    const product = await productsService.addProducts(name);
+
+    res.status(201).json(product);
   },
 };
 
