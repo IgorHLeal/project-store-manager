@@ -39,6 +39,22 @@ const salesController = {
 
     res.sendStatus(204);
   },
+
+  async update(req, res) {
+    const { id } = req.params;
+    const sales = req.body;
+
+    await salesService.checkIfExists(id);
+    const validatedSales = sales.map((sale) => salesService.validateBody(sale));
+
+    const checkPromises = validatedSales
+      .map(({ productId }) => productsService.checkIfExists(productId));
+    await Promise.all(checkPromises);
+
+    const updatedSale = await salesService.update(id, sales);
+
+    res.status(200).json(updatedSale);
+  },
 };
 
 module.exports = salesController;
