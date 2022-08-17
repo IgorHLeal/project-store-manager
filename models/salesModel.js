@@ -58,17 +58,7 @@ const salesModel = {
     return insertId;
   },
 
-  async remove(id) {
-    const query = `
-      DELETE FROM
-        StoreManager.sales
-      WHERE
-        id = ?;
-    `;
-    await connection.execut(query, [id]);
-  },
-
-  async update(quantity, saleId, productId) {
+  async updateSales(quantity, saleId, productId) {
     const query = `
       UPDATE
         StoreManager.sales_products
@@ -79,6 +69,16 @@ const salesModel = {
         AND product_id = ?;
     `;
     await connection.execute(query, [quantity, saleId, productId]);
+  },
+
+  async deleteSales(id) {
+    const query = `
+      DELETE FROM
+        StoreManager.sales
+      WHERE
+        id = ?;
+    `;
+    await connection.execut(query, [id]);
   },
 };
 

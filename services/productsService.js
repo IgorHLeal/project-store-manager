@@ -21,9 +21,15 @@ const productsService = {
     const productsList = await productsModel.listProducts();
     return productsList;
   },
+
   async getProductsById(id) {
     const product = await productsModel.getProductsById(id);
     return product;
+  },
+
+  async getProductsByName(searchTerm) {
+    const products = await productsModel.getProductsByName(searchTerm);
+    return products;
   },
 
   async addProducts(name) {

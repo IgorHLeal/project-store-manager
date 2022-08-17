@@ -31,15 +31,15 @@ const salesService = {
     return { id: saleId, itemsSold: sales };
   },
 
-  async remove(id) {
-    await salesModel.remove(id);
-  },
-
-  async update(saleId, saleToUpdate) {
+  async updateSales(saleId, saleToUpdate) {
     const promises = saleToUpdate
-      .map(({ productId, quantity }) => salesModel.update(quantity, saleId, productId));
+      .map(({ productId, quantity }) => salesModel.updateSales(quantity, saleId, productId));
     await Promise.all(promises);
     return { saleId, itemsUpdated: saleToUpdate };
+  },
+
+  async deleteSales(id) {
+    await salesModel.deleteSales(id);
   },
 };
 

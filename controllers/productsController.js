@@ -16,6 +16,14 @@ const productsController = {
     res.status(200).json(product);
   },
 
+  async getProductsByName(req, res) {
+    const { q } = req.query;
+
+    const products = await productsService.getProductsByName(q);
+
+    res.status(200).json(products);
+  },
+
   async addProducts(req, res) {
     const { name } = productsService.validateBody(req.body);
 

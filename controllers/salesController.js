@@ -31,16 +31,7 @@ const salesController = {
     res.status(201).json(saleInfo);
   },
 
-  async remove(req, res) {
-    const { id } = req.params;
-
-    await salesService.checkIfExists(id);
-    await salesService.remove(id);
-
-    res.sendStatus(204);
-  },
-
-  async update(req, res) {
+  async updateSales(req, res) {
     const { id } = req.params;
     const sales = req.body;
 
@@ -51,9 +42,18 @@ const salesController = {
       .map(({ productId }) => productsService.checkIfExists(productId));
     await Promise.all(checkPromises);
 
-    const updatedSale = await salesService.update(id, sales);
+    const updatedSale = await salesService.updateSales(id, sales);
 
     res.status(200).json(updatedSale);
+  },
+
+  async deleteSales(req, res) {
+    const { id } = req.params;
+
+    await salesService.checkIfExists(id);
+    await salesService.deleteSales(id);
+
+    res.sendStatus(204);
   },
 };
 

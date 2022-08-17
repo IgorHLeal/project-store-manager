@@ -13,6 +13,12 @@ const productsModel = {
     return product;
   },
 
+  getProductsByName: async (search) => {
+    const query = 'SELECT * FROM StoreManager.products WHERE name LIKE ?';
+    const [products] = await connection.execute(query, [`%${search}%`]);
+    return products;
+  },
+
   addProducts: async (name) => {
     const query = 'INSERT INTO StoreManager.products (name) VALUES (?)';
     const [{ insertId }] = await connection.execute(query, [name]);
