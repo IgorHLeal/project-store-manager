@@ -39,4 +39,19 @@ describe("models/productsModel", () => {
       return expect(productsModel.listProducts()).to.eventually.be.rejected;
     });
   });
+
+  describe("getProductsById", () => {
+    it("deve retornar um objeto quando connection.execute retornar um objeto", () => {
+      const result = { id: 1, name: "Martelo de Thor" };
+
+      sinon.stub(connection, "execute").resolves([[result]]);
+
+      return expect(productsModel.getProductsById(1)).to.eventually.deep.equal(result);
+    });
+
+    it("deve ser rejeitado quando connection.execute for rejeitado", () => {
+      sinon.stub(connection, "execute").rejects();
+      return expect(productsModel.getProductsById(1)).to.eventually.be.rejected;
+    });
+  });
 });

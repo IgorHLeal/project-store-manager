@@ -95,4 +95,20 @@ describe("services/productsService", () => {
       return expect(productsService.listProducts()).to.eventually.be.rejected;
     });
   });
+
+  describe("getProductsById", () => {
+    it("deve retornar um objeto quando productsModel.getById retornar um objeto", () => {
+      const result = { id: 1, name: "Martelo de Thor" };
+      sinon.stub(productsModel, "getProductsById").resolves(result);
+
+      return expect(productsService.getProductsById(1)).to.eventually.deep.equal(
+        result
+      );
+    });
+
+    it("deve ser rejeitado quando productsModel.getById for rejeitado", () => {
+      sinon.stub(productsModel, "getProductsById").rejects();
+      return expect(productsService.getProductsById(1)).to.eventually.be.rejected;
+    });
+  });
 });

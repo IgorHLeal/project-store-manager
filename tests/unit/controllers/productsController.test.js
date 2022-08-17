@@ -43,4 +43,41 @@ describe("controllers/productsController", () => {
       expect(res.json.getCall(0).args[0]).to.deep.equal(result);
     });
   });
+
+  describe("getProductsById", () => {
+    it("deve ser rejeitado quando productsService.checkIfExists for rejeitado", () => {
+      sinon.stub(productsService, "checkIfExists").rejects();
+      return expect(productsController.getProductsById({}, {})).to.eventually.be
+        .rejected;
+    });
+
+    it("deve ser rejeitado quando o service for rejeitado", () => {
+      sinon.stub(productsService, "checkIfExists").resolves();
+      sinon.stub(productsService, "getProductsById").rejects();
+      return expect(productsController.getProductsById({}, {})).to.eventually.be
+        .rejected;
+    });
+
+    it("deve retornar o status code 200 e o produto", async () => {
+      const req = {
+        params: { id: 1 },
+      };
+      const res = {
+        status: sinon.stub().callsFake(() => res),
+        json: sinon.stub().returns(),
+      };
+
+      sinon.stub(productsService, "checkIfExists").resolves();
+      sinon
+        .stub(productsService, "getProductsById")
+        .resolves({ id: 1, name: "Martelo de Thor" });
+
+      await productsController.getProductsById(req, res);
+      expect(res.status.getCall(0).args[0]).to.equal(200);
+      expect(res.json.getCall(0).args[0]).to.deep.equal({
+        id: 1,
+        name: "Martelo de Thor",
+      });
+    });
+  });
 });

@@ -40,7 +40,7 @@ describe("models/salesModel", () => {
     });
   });
 
-  describe("listProducts", () => {
+  describe("listSales", () => {
     it("deve retornar uma lista de vendas quando connection.query retornar uma lista", () => {
       const result = [
         {
@@ -59,16 +59,16 @@ describe("models/salesModel", () => {
 
       sinon.stub(connection, "execute").resolves([result]);
 
-      return expect(salesModel.listProducts()).to.eventually.deep.equal(result);
+      return expect(salesModel.listSales()).to.eventually.deep.equal(result);
     });
 
     it("deve ser rejeitado quando connection.query for rejeitado", () => {
       sinon.stub(connection, "execute").rejects();
-      return expect(salesModel.listProducts()).to.eventually.be.rejected;
+      return expect(salesModel.listSales()).to.eventually.be.rejected;
     });
   });
 
-  /* describe("getProductsById", () => {
+  describe("getSalesById", () => {
     it("deve retornar uma lista quando connection.query retornar uma lista", () => {
       const result = [
         {
@@ -85,12 +85,12 @@ describe("models/salesModel", () => {
 
       sinon.stub(connection, "execute").resolves([result]);
 
-      return expect(salesModel.getProductsById(1)).to.eventually.deep.equal(result);
+      return expect(salesModel.getSalesById(1)).to.eventually.deep.equal(result);
     });
 
     it("deve ser rejeitado quando connection.query for rejeitado", () => {
       sinon.stub(connection, "execute").rejects();
-      return expect(salesModel.getProductsById(1)).to.eventually.be.rejected;
+      return expect(salesModel.getSalesById(1)).to.eventually.be.rejected;
     });
-  }); */
+  });
 });

@@ -81,7 +81,7 @@ describe("services/salesService", () => {
     });
   });
 
-  describe("listProducts", () => {
+  describe("listSales", () => {
     it("deve retornar uma lista de vendas quando o model retornar uma lista", () => {
       const result = [
         {
@@ -97,14 +97,40 @@ describe("services/salesService", () => {
           quantity: 2,
         },
       ];
-      sinon.stub(salesModel, "listProducts").resolves(result);
+      sinon.stub(salesModel, "listSales").resolves(result);
 
-      return expect(salesService.listProducts()).to.eventually.deep.equal(result);
+      return expect(salesService.listSales()).to.eventually.deep.equal(result);
     });
 
     it("deve ser rejeitado quando o model for rejeitado", () => {
-      sinon.stub(salesModel, "listProducts").rejects();
-      return expect(salesService.listProducts()).to.eventually.be.rejected;
+      sinon.stub(salesModel, "listSales").rejects();
+      return expect(salesService.listSales()).to.eventually.be.rejected;
+    });
+  });
+
+  describe("getSalesById", () => {
+    it("deve retornar uma lista quando o model retornar uma lista", () => {
+      const result = [
+        {
+          date: "2021-09-09T04:54:29.000Z",
+          productId: 1,
+          quantity: 2,
+        },
+        {
+          date: "2021-09-09T04:54:54.000Z",
+          productId: 2,
+          quantity: 2,
+        },
+      ];
+
+      sinon.stub(salesModel, "getSalesById").resolves(result);
+
+      return expect(salesService.getSalesById(1)).to.eventually.deep.equal(result);
+    });
+
+    it("deve ser rejeitado quando o model for rejeitado", () => {
+      sinon.stub(salesModel, "getSalesById").rejects();
+      return expect(salesService.getSalesById(1)).to.eventually.be.rejected;
     });
   });
 });
